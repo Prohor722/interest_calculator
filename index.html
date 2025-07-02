@@ -62,13 +62,55 @@
         gap: 24px;
         align-items: end;
     }
+    .first-left-input{
+        width: 203px;
+    }
     .left-input{
         width: 220px;
     }
     .increments-check{
         text-align: end;
         display: block;
-        margin: 6px 0px;
+        margin-top: 6px;
+        margin-bottom: 10px;
+    }
+    #increments-display{
+        margin-top: 20px;
+        font-size: 14px;
+        line-height: 16px;
+    }
+    #result{
+        line-height: 12px;
+    }
+
+    @media (max-width: 580px) {
+      .align-groups {
+        flex-direction: column;
+        gap: 0px;
+      }
+      
+      .left-input, .first-left-input{
+        width: 100%;
+      }
+      .first-left-input{
+        position: absolute;
+        max-width: 196px;
+      }
+
+      .second-input{
+        margin-top: 38px;
+      }
+      .form-group{
+        width: 100%;
+        position: relative;
+      }
+      h2 {
+        font-size: 22px;
+      }
+
+      .increments-check {
+        text-align: left;
+      }
     }
   </style>
 </head>
@@ -80,10 +122,10 @@
     <div class="align-groups">
         <div class="form-group">
             <label for="amount">Actual Amount (Principal)</label>
-            <input class="left-input" style="width: 203px;" type="number" id="amount" placeholder="Enter amount" />
+            <input class="first-left-input" type="number" id="amount" placeholder="Enter amount" />
         </div>
       
-        <div class="form-group">
+        <div class="form-group second-input">
           <label for="amount">Currency type</label>
           <input type="text" id="money-type" placeholder="Enter Currency Type" />
         </div>
