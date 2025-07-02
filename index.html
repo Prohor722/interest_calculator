@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interest Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .align-groups {
+        display: flex;
+        gap: 24px;
+        align-items: end;
+    }
+    .left-input{
+        width: 220px;
+    }
+    .increments-check{
+        text-align: end;
+        display: block;
+        margin: 6px 0px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Interest Calculator</h2>
+  <div class="calculator">
+
+    <div class="align-groups">
+        <div class="form-group">
+            <label for="amount">Actual Amount (Principal)</label>
+            <input class="left-input" style="width: 203px;" type="number" id="amount" placeholder="Enter amount" />
+        </div>
+      
+        <div class="form-group">
+          <label for="amount">Currency type</label>
+          <input type="text" id="money-type" placeholder="Enter Currency Type" />
+        </div>
+    </div>
+    
+
+    <div class="align-groups">
+        <div class="form-group">
+            <label for="interest">Interest On (Time)</label>
+            <select class="left-input" id="interest-on">
+              <option value="year">Year</option>
+              <option value="month">Month</option>
+              <option value="day">Day</option>
+              <option value="hour">Hour</option>
+              <option value="minute">Minute</option>
+              <option value="second">Second</option>
+            </select>
+        </div>
+    
+        <div class="form-group">
+          <label for="interest">Interest Rate (%)</label>
+          <input type="number" id="interest" placeholder="Enter interest percent" />
+        </div>
+    </div>
+    
+
+    <div class="align-groups">
+        <div class="form-group">
+            <label for="durationUnit">Calculation Time Unit</label>
+            <select class="left-input" id="durationUnit">
+              <option value="year">Year</option>
+              <option value="month">Month</option>
+              <option value="day">Day</option>
+              <option value="hour">Hour</option>
+              <option value="minute">Minute</option>
+              <option value="second">Second</option>
+            </select>
+        </div>
+    
+        <div class="form-group">
+          <label for="duration">Duration</label>
+          <input type="number" id="duration" placeholder="Enter time duration" />
+        </div>
+    </div>
+    
+
+    <button onclick="calculateInterest()">
+        Calculate Total
+    </button>
+    <a class="increments-check" href="#" onclick="generateInterestReport()">
+        check first 3 increments
+    </a>
+
+    <div id="result"></div>
+    <div id="increments-display"></div>
+  </div>
+
+  <script>
+    const getTimeOnInterest = () =>{
+        const duration = parseFloat(document.getElementById("duration").value);
+        const durationUnit = document.getElementById("durationUnit").value;
+        const interestOn = document.getElementById("interest-on").value;
+        
+        if(duration<=0){
+            return 0;
+        }
+
+        if(durationUnit == "year"){
+
+            switch (interestOn) {
+                case "year":
+                return duration;
+                
+                case "month":
+                return duration * 12;
+                
+                case "day":
+                return duration * 365;
+                
+                case "hour":
+                return duration * (365 * 24)
+
+                case "minute":
+                return duration * (365 * 24 * 60);
+                
+                case "second":
+                return duration * (365 * 24 * 60 * 60);
+
+                default:
+                return 0;
+            }
+        }
+
+        if(durationUnit == "month"){
+
+            switch (interestOn) {
+                case "month":
+                return duration;
+                
+                case "day":
+                return duration * 30;
+                
+                case "hour":
+                return duration * (30 * 24)
+
+                case "minute":
+                return duration * (30 * 24 * 60);
+                
+                case "second":
+                return duration * (30 * 24 * 60 * 60);
+
+                default:
+                return 0;
+            }
+        }
+
+        if(durationUnit == "day"){
+
+            switch (interestOn) {
+                case "day":
+                return duration;
+                
+                case "hour":
+                return duration  * 24
+
+                case "minute":
+                return duration * (24 * 60);
+                
+                case "second":
+                return duration * (24 * 60 * 60);
+
+                default:
+                return 0;
+            }
+        }
+        
+        if(durationUnit == "hour"){
+
+            switch (interestOn) {
+                case "hour":
+                return duration;
+
+                case "minute":
+                return duration * (60);
+                
+                case "second":
+                return duration * (60 * 60);
+
+                default:
+                return 0;
+            }
+        }
+
+        if(durationUnit == "minute"){
+
+            switch (interestOn) {
+                case "minute":
+                return duration;
+                
+                case "second":
+                return duration * (60);
+
+                default:
+                return 0;
+            }
+        }
+
+        else{
+            return duration;
+        }
+      }
+      
+    function calculateInterest() {
+      const principal = parseFloat(document.getElementById("amount").value);
+      const rate = parseFloat(document.getElementById("interest").value);
+      const duration = parseFloat(document.getElementById("duration").value);
+      const durationUnit = document.getElementById("durationUnit").value;
+      const interestOn = document.getElementById("interest-on").value;
+      const moneyType = document.getElementById("money-type").value;
+
+      if (isNaN(principal) || isNaN(rate) || isNaN(duration)) {
+        document.getElementById("result").innerText = "Please enter valid numbers.";
+        return;
+      }
+
+      
+
+      const interestCicle = getTimeOnInterest();
+      let totalAmount = principal;
+
+      for(let i =0; i<interestCicle; i++){
+        totalAmount += totalAmount * (rate / 100)
+      }
+      
+      const interestAmount = totalAmount - principal;
+
+      document.getElementById("result").innerText =
+        `Base Ammount: ${principal.toFixed(2)+" "+moneyType}
+        \nTotal Interest: ${interestAmount.toFixed(2)+" "+moneyType}
+        \nTotal Amount: ${totalAmount.toFixed(2)+" "+moneyType}`;
+    }
+    
+    function generateInterestReport(){
+        const interestCicle = getTimeOnInterest();
+        const principal = parseFloat(document.getElementById("amount").value);
+        const rate = parseFloat(document.getElementById("interest").value);
+        const moneyType = document.getElementById("money-type").value;
+        let totalAmount = principal;
+
+        let report = "";
+
+        for (let i = 0; i < interestCicle; i++) {
+            const interest = totalAmount * (rate / 100);
+            report += `Interest no.${i + 1}: interest is ${interest.toFixed(2)} ${moneyType}\n` +
+                    `Total Amount: ${(totalAmount + interest).toFixed(2)} ${moneyType}\n\n`;
+            totalAmount += interest; // Update total for next cycle
+        }
+
+        // Show all reports at once
+        document.getElementById("increments-display").innerText = report;
+    }
+  
+  </script>
+
+</body>
+</html>
