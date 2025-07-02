@@ -73,12 +73,33 @@
         display: block;
         margin-top: 6px;
         margin-bottom: 10px;
+
+        padding: 3px 5px;
+        text-decoration: none;
+        border-radius: 6px;
+        border: 2px solid;
+        color: white;
+    }
+    .increments-check-left{
+        background-color: #46cb46;
+    }
+    .increments-check-right{
+        background-color: #ce4624;
     }
     #increments-display{
         margin-top: 20px;
         font-size: 14px;
         line-height: 16px;
     }
+    .increment-btns{
+        display: flex;
+        gap: 4px;
+    }
+
+    .clear-btn{
+        background-color: #dddd29;
+    }
+
     #result{
         line-height: 12px;
     }
@@ -175,9 +196,19 @@
     <button onclick="calculateInterest()">
         Calculate Total
     </button>
-    <a class="increments-check" href="#" onclick="generateInterestReport()">
-        check first 3 increments
-    </a>
+    
+    <div class="increment-btns">
+        <a class="increments-check increments-check-left" href="#" onclick="generateInterestReport()">
+            check first 3 increments
+        </a>
+        <a class="increments-check increments-check-right" href="#" onclick="generateInterestReport(1)">
+            full report
+        </a>
+        <a class="increments-check clear-btn" href="#" onclick="clearReports()">
+            clear
+        </a>
+    </div>
+    
 
     <div id="result"></div>
     <div id="increments-display"></div>
@@ -328,8 +359,8 @@
         \nTotal Amount: ${totalAmount.toFixed(2)+" "+moneyType}`;
     }
     
-    function generateInterestReport(){
-        const interestCicle = getTimeOnInterest();
+    function generateInterestReport(value=0){
+        const interestCicle = value ? getTimeOnInterest() : 3;
         const principal = parseFloat(document.getElementById("amount").value);
         const rate = parseFloat(document.getElementById("interest").value);
         const moneyType = document.getElementById("money-type").value;
@@ -346,6 +377,11 @@
 
         // Show all reports at once
         document.getElementById("increments-display").innerText = report;
+    }
+
+    function clearReports(){
+        document.getElementById("result").innerText = "";
+        document.getElementById("increments-display").innerText = "";
     }
   
   </script>
