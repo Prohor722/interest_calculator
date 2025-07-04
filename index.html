@@ -373,7 +373,7 @@
     }
     
     function generateInterestReport(value=0){
-        const interestCicle = value ? getTimeOnInterest() : 3;
+        const interestCicle = value && getTimeOnInterest()>3 ? getTimeOnInterest() : 3;
         const principal = parseFloat(document.getElementById("amount").value);
         const rate = parseFloat(document.getElementById("interest").value);
         const moneyType = document.getElementById("money-type").value;
