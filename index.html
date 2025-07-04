@@ -110,6 +110,38 @@
         text-align: center;
     }
 
+    /* table CSS  */
+    .interest-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      border: none;
+    }
+    
+    .interest-table th {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      text-align: left;
+    }
+    .interest-table td {
+      padding: 10px;
+      border-left-color: #c5c5c5d6;
+      border-right-color: #c5c5c5d6;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .interest-table tr:hover {
+      background-color: #f5f5f5;
+    }
+    .interest-table td:last-child {
+      font-weight: bold;
+      color: #333;
+    }
+
     @media (max-width: 720px) {
       body {
         padding: 10px;
@@ -146,6 +178,7 @@
         line-height: 16px;
       }
     }
+
   </style>
 </head>
 <body>
@@ -393,17 +426,38 @@
         const moneyType = document.getElementById("money-type").value;
         let totalAmount = principal;
 
-        let report = "";
+        let report = `
+            <table class="interest-table" border="1" cellpadding="6" style="border-collapse: collapse; margin-top: 20px;">
+              <thead>
+                <tr>
+                  <th>Increment No.</th>
+                  <th>Interest Ammount</th>
+                  <th>Total Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+            `;
 
         for (let i = 0; i < interestCicle; i++) {
-            const interest = totalAmount * (rate / 100);
-            report += `Interest no.${i + 1}: interest is ${formatNumberAddingCommas(interest.toFixed(2))} ${moneyType}\n` +
-                    `Total Amount: ${formatNumberAddingCommas((totalAmount + interest).toFixed(2))} ${moneyType}\n\n`;
-            totalAmount += interest; // Update total for next cycle
+          const interest = totalAmount * (rate / 100);
+          const total = totalAmount + interest;
+
+          report += `
+            <tr>
+              <td>${i + 1}</td>
+              <td>${formatNumberAddingCommas(interest.toFixed(2))} ${moneyType}</td>
+              <td>${formatNumberAddingCommas(total.toFixed(2))} ${moneyType}</td>
+            </tr>
+          `;
+
+          totalAmount = total; // Update for next cycle
         }
 
+        report += `</tbody></table>`;
+
         // Show all reports at once
-        document.getElementById("increments-display").innerText = report;
+        // document.getElementById("increments-display").innerText = report;
+        document.getElementById("increments-display").innerHTML = report;
     }
 
     function clearReports(){
